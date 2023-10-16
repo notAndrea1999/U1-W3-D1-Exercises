@@ -1,0 +1,51 @@
+Esericzio 1: Estrarre il nome  e il cognome dei clienti nati nel 1982.
+	
+SELECT first_name, last_name FROM public."Clienti" 
+WHERE EXTRACT(YEAR FROM birth_date)=1982
+
+-------------------------------------------------------------------------------------------------------
+
+Esercizio 2: Estrarre il numero delle fatture con iva al 20%.
+
+SELECT COUNT(*) as numero_fatture FROM public."Fatture"
+WHERE iva = 20
+
+-------------------------------------------------------------------------------------------------------
+ 
+Esercizio 3: Riportare il numero di fatture e la somma dei relativi importi divisi per anno di fatturazione.
+
+SELECT EXTRACT(YEAR FROM data_fattura) , COUNT(*) AS numero_fatture_per_anno, SUM(importo) AS totale_costo_fattura FROM public."Fatture"
+GROUP BY EXTRACT(YEAR FROM data_fattura)
+
+-------------------------------------------------------------------------------------------------------
+
+Esecizio 4: Estarre i prodotti attivati nel 2017 e che sono in produzione oppure in commercio
+
+SELECT * FROM public."Prodotti"
+WHERE EXTRACT(YEAR FROM data_attivazione)='2017' and (in_produzione = 'true' or in_commercio= 'true')
+
+
+-------------------------------------------------------------------------------------------------------
+
+Esercizio 5: Considerando soltanto le fatture con iva al 20% estrarre il numero di fatture per ogni anno
+
+SELECT EXTRACT(YEAR FROM data_fattura), iva, COUNT(*) as numero_fatture FROM public."Fatture"
+WHERE iva = 20
+GROUP BY EXTRACT(YEAR FROM data_fattura), iva
+
+-------------------------------------------------------------------------------------------------------
+
+Esercizio 6: Estrarre gli anni in cui sono state registrate piu di 2 fatture con tipologia 'A'
+
+SELECT EXTRACT(YEAR FROM data_fattura), COUNT(*) as numero_di_fatture FROM public."Fatture"
+WHERE tipologia = 'A' 
+GROUP BY EXTRACT(YEAR FROM data_fattura)
+
+-------------------------------------------------------------------------------------------------------
+
+Esercizio 7: Riportare l'elenco delle fatture (numero, importo, iva e data) con in aggiunta il nome del fornitore
+
+SELECT numero_fattura, importo, iva, data_fattura, denominazione FROM public."Fatture" JOIN public."Fornitori" USING(fornitore_id)
+
+-------------------------------------------------------------------------------------------------------
+
