@@ -49,3 +49,9 @@ SELECT numero_fattura, importo, iva, data_fattura, denominazione FROM public."Fa
 
 -------------------------------------------------------------------------------------------------------
 
+Esercizio 9: Estrarre il numero dei clienti nati nel 1980 che hanno almeno una fattura superiore a 50 0euro.
+
+SELECT cliente_id, importo, COUNT(cliente_id) FROM public."Clienti" JOIN public."Fatture" USING(cliente_id)
+WHERE EXTRACT(YEAR FROM birth_date)=1980
+GROUP BY cliente_id, importo
+
